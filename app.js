@@ -1,28 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require('./config/mongoose');
+
+const Post = require('./models/Post'); 
 
 const app = express();
+app.use(express.json()); //Middleware para o express realizar o Parse de JSONs
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-mongoose.connect('mongodb+srv://mongopost:postpost@cluster0-zjuyi.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useFindAndModify: true
+app.post('/posts', async (req, res) => {
+    await Post.create(req.body);
+    res.sendStatus(200);
 });
-
-
-async function testar() {
-    
-    const Test = mongoose.model('Test', {name: String});
-    
-    const t = new Test({name: "Testando mongoose"});
-    await t.save().then(() => {
-        console.log('Objeto criado');
-    })
-}
-
-testar();
 
 app.listen('3000');
