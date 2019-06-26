@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('./config/mongoose');
 
-const Post = require('./models/Post'); 
+const PostController = require('./controllers/PostController');
 
 const app = express();
 app.use(express.json()); //Middleware para o express realizar o Parse de JSONs
@@ -10,9 +10,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.post('/posts', async (req, res) => {
-    await Post.create(req.body);
-    res.sendStatus(200);
-});
+app.get('/posts', PostController.index);
+app.post('/posts', PostController.store); //atuará como middleware passando os parametros para o metodo
 
 app.listen('3000');
