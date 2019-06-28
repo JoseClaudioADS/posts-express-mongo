@@ -6,6 +6,8 @@ const PostRoutes = require('./routes/PostRoutes');
 const UsuarioController = require('./controllers/UsuarioController');
 const AuthController = require('./controllers/AuthController');
 
+const authMiddleware = require('./middlewares/authMiddleware');
+
 const app = express();
 app.use(express.json()); //Middleware para o express realizar o Parse de JSONs
 
@@ -15,6 +17,9 @@ app.get('/', (req, res) => {
 
 app.post('/usuarios', validator.body(require('./validators/UsuarioValidator')), UsuarioController.store);
 app.post('/auth', validator.body(require('./validators/AuthValidator')), AuthController.store);
+
+//Toda rota abaixo do middleware vai precisar de autenticação
+app.use(authMiddleware);
 
 app.use('/posts', PostRoutes);
 
