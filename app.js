@@ -3,6 +3,8 @@ const express = require('express');
 const validator = require('express-joi-validation').createValidator({passError: true});
 
 const PostRoutes = require('./routes/PostRoutes');
+const ComentarioRoutes = require('./routes/ComentarioRoutes');
+
 const UsuarioController = require('./controllers/UsuarioController');
 const AuthController = require('./controllers/AuthController');
 
@@ -22,6 +24,7 @@ app.post('/auth', validator.body(require('./validators/AuthValidator')), AuthCon
 app.use(authMiddleware);
 
 app.use('/posts', PostRoutes);
+app.use('/comentarios', ComentarioRoutes);
 
 
 //Error Handler

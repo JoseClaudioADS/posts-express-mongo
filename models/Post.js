@@ -16,7 +16,11 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, //tipo uma FK
         ref: 'Usuario',
         required: true
-    }
+    },
+    comentarios: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comentario',
+    }]
 
 }, {timestamps: true});
 

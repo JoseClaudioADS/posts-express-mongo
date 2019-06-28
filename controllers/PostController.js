@@ -9,7 +9,13 @@ class PostController {
 
     async show (req, res) {
 
-        const postEncontrado = await Post.findById(req.params.postId);
+        const postEncontrado = await Post.findById(req.params.postId)
+        .populate('autor', 'nome email')
+        //com isso populamos o autor dos comentários, multi level
+        .populate({
+            path: 'comentarios',
+            populate: 'autor'
+        });
 
         if (postEncontrado) {
             return res.send(postEncontrado);
