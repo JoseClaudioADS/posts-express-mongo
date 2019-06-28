@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
         const tokenDecodificado = await promisify(jwt.verify)(token, authConfig.secret);
 
         //o ".id" vem do método "gerarToken" do Usuario --> {id} no sign
-        req.usuarioId - tokenDecodificado.id;
+        req.usuarioId = tokenDecodificado.id;
         return next();
     } catch (err) {
         return res.status(401).json({error: 'Token inválido'});

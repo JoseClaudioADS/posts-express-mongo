@@ -11,6 +11,11 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true,
         maxlength: 500
+    },
+    autor: {
+        type: mongoose.Schema.Types.ObjectId, //tipo uma FK
+        ref: 'Usuario',
+        required: true
     }
 
 }, {timestamps: true});

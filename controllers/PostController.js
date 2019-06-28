@@ -3,7 +3,8 @@ const Post = require('../models/Post');
 class PostController {
 
     async index (req, res) {
-        return res.send(await Post.find({}));
+        //populate -> serve para carregar o autor, mas apenas os campos nome e email
+        return res.send(await Post.find({}).populate('autor', 'nome email'));
     }
 
     async show (req, res) {
@@ -18,7 +19,10 @@ class PostController {
     }
 
     async store (req, res) {
-        await Post.create(req.body);
+        //... é um operador que aqui faz a função de cópia do objeto
+        //incluindo o autor no novo objeto usando o "usuarioId" que 
+        //setamos no header pós authMiddleware 
+        await Post.create({...req.body, autor: req.usuarioId});
         return res.sendStatus(201);
     }
 
