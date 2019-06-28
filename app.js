@@ -1,18 +1,23 @@
 require('./config/mongoose');
 const express = require('express');
+const validator = require('express-joi-validation').createValidator({passError: true});
 
 const PostRoutes = require('./routes/PostRoutes');
+const UsuarioController = require('./controllers/UsuarioController');
 
 const app = express();
 app.use(express.json()); //Middleware para o express realizar o Parse de JSONs
-
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+app.post('/usuarios', validator.body(require('./validators/UsuarioValidator')), UsuarioController.store);
+
 app.use('/posts', PostRoutes);
 
+
+//Error Handler
 app.use((err, req, res, next) => {
     if (err && err.error && err.error.isJoi) {
       res.status(400).json({
