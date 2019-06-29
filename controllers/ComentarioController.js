@@ -1,13 +1,12 @@
-const Comentario = require('../models/Comentario');
-const Post = require('../models/Post');
+const models = require('../models');
 
 class ComentarioController {
 
     async store (req, res) {
-        const comentarioCadastrado = await Comentario.create({...req.body, likes: 0, 
+        const comentarioCadastrado = await models.Comentario.create({...req.body, likes: 0, 
             autor: req.usuarioId, post: req.params.postId});
 
-        const post = await Post.findById(req.params.postId);
+        const post = await models.Post.findById(req.params.postId);
         post.comentarios.push(comentarioCadastrado.id);
         await post.save();
 
@@ -17,7 +16,7 @@ class ComentarioController {
     async like (req, res) {
         //ao inves de like: like + 1
         //dessa forma utilizamos um operador do MongoDB de incremento, neste caso em 1
-        await Comentario.findByIdAndUpdate(req.params.comentarioId, {$inc : {likes: 1}});
+        await models.Comentario.findByIdAndUpdate(req.params.comentarioId, {$inc : {likes: 1}});
         return res.send();
     }
 }

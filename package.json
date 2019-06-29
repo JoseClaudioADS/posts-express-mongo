@@ -14,7 +14,9 @@
     "express": "^4.17.1",
     "express-joi-validation": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.1"
+    "mongoose": "^5.6.1",
+    "mongoose-paginate": "^5.0.3",
+    "require-dir": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
