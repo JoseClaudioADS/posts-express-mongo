@@ -13,7 +13,7 @@ class UsuarioController {
         //O schema de usuário "bate" com o model de usuário, por isso o req.body já serve
         const usuarioCadastado = await Usuario.create(req.body);
 
-        return res.status(201).json(usuarioCadastado);
+        return res.sendStatus(201);
     }
 
 }
